@@ -11,7 +11,6 @@ async function verificarElemento() {
             try {
                 await page.goto('https://www.nightcrows.com/pt?wmsso_sign=check');
 
-                // Esperar 2 segundos para garantir que a página foi totalmente carregada
                 await new Promise(resolve => setTimeout(resolve, 2000));
 
                 const elemento = await page.evaluate(() => {
@@ -21,14 +20,12 @@ async function verificarElemento() {
                 });
 
                 if (elemento) {
-                    // Adicionar quebra de linha após cada linha de texto
                     const linhas = elemento.split('\n');
                     const mensagemOrganizada = linhas.join('\n\n');
 
                     console.log('Conteúdo do elemento:', mensagemOrganizada);
                     if (mensagemOrganizada.includes('NOTA DE PATCH')) {
                         console.log('Encontrou "NOTA DE PATCH" no elemento!');
-                        // Exibir mensagem de alerta
                         exec('msg * Encontrou "NOTA DE PATCH" no elemento!');
                     } else {
                         console.log('Não encontrou "NOTA DE PATCH" no elemento.');
@@ -43,7 +40,7 @@ async function verificarElemento() {
                     console.error('Ocorreu um erro:', error);
                 }
             }
-        }, 30000); // Verificar a cada 60 segundos
+        }, 30000);
     } catch (error) {
         console.error('Ocorreu um erro ao iniciar o navegador:', error);
         if (browser) {
